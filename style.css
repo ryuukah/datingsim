@@ -1,1480 +1,248 @@
-/* =========================================================
-   RETRO OTOME / VISUAL NOVEL INTERFACE
-   ========================================================= */
+/* ==========================================
+   VISUAL NOVEL RETRO ENGINE - style.css
+   ========================================== */
 
-/* =========================================================
-   FONTS
-   ========================================================= */
+/* --- Design Variables --- */
+:root {
+  --bg-dark: #121212;
+  --text-gold: #fcf18d;
+  --text-green: #9bf3aa;
+  --text-stroke: #1b4d22;
+  --dialogue-pink: rgba(222, 59, 114, 0.45);
+  --dialogue-pink-gradient: linear-gradient(180deg, rgba(222, 59, 114, 0.3) 0%, rgba(135, 12, 53, 0.75) 100%);
+  --bar-fluid-red: linear-gradient(90deg, #ff4c4c 0%, #990000 100%);
+  --retro-font: 'Georgia', serif; /* Replace with local pixel/serif font if available */
+}
 
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap');
-
-
-/* =========================================================
-   RESET
-   ========================================================= */
-
+/* --- Base Reset & Canvas Alignment --- */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html,
-body {
-    width: 100%;
-    height: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    min-height: 100vh;
-    overflow: hidden;
-
-    background:
-        radial-gradient(
-            ellipse at center,
-            #6d6470 0%,
-            #353338 55%,
-            #111114 100%
-        );
-
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
+  background-color: var(--bg-dark);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+  font-family: var(--retro-font);
 }
 
-
-/* =========================================================
-   MAIN 16:9 GAME SCREEN
-   ========================================================= */
-
+/* --- 16:9 Game Screen Container --- */
 .game-screen {
-    position: relative;
-
-    width: min(100vw, 177.777vh);
-    height: min(100vh, 56.25vw);
-
-    margin: auto;
-
-    overflow: hidden;
-
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(255, 255, 255, 0.04),
-            rgba(0, 0, 0, 0.08)
-        ),
-        #28282b;
-
-    isolation: isolate;
-
-    box-shadow:
-        inset 0 0 70px rgba(0, 0, 0, 0.72),
-        inset 0 0 18px rgba(0, 0, 0, 0.9),
-        0 0 45px rgba(0, 0, 0, 0.75);
+  position: relative;
+  width: 100vw;
+  max-width: 1280px;
+  aspect-ratio: 16 / 9;
+  background-color: #2c2925;
+  background-image: url('your-background-image.jpg'); /* Background wood/curtain textures */
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
 }
 
-
-/* =========================================================
-   BACKGROUND IMAGE
-   ========================================================= */
-
+/* --- Retro CRT Monitor Overlay & Scanlines --- */
 .game-screen::before {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    z-index: -10;
-
-    background-image: var(--background-image, url("classroom.png"));
-
-    background-size: cover;
-    background-position: center;
-
-    transform: scale(1.015);
-
-    filter:
-        saturate(0.82)
-        contrast(0.95)
-        brightness(0.92);
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+              linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 10;
+  background-size: 100% 4px, 6px 100%;
+  pointer-events: none;
 }
-
-
-/* =========================================================
-   RETRO HORIZONTAL SCANLINES
-   ========================================================= */
 
 .game-screen::after {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    z-index: 999;
-
-    pointer-events: none;
-
-    background:
-        repeating-linear-gradient(
-            to bottom,
-            rgba(255, 255, 255, 0.035) 0px,
-            rgba(255, 255, 255, 0.035) 1px,
-            rgba(0, 0, 0, 0.08) 2px,
-            rgba(0, 0, 0, 0.08) 4px
-        );
-
-    mix-blend-mode: overlay;
-
-    opacity: 0.75;
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
+  z-index: 11;
+  pointer-events: none;
+  background: radial-gradient(circle, transparent 60%, rgba(0,0,0,0.4) 100%);
 }
 
-
-/* =========================================================
-   CRT VIGNETTE
-   ========================================================= */
-
-.game-screen {
-    box-shadow:
-        inset 0 0 100px rgba(0, 0, 0, 0.82),
-        inset 0 0 30px rgba(0, 0, 0, 0.95),
-        0 0 45px rgba(0, 0, 0, 0.8);
-}
-
-
-/* Additional vignette layer */
-
-.game-screen .crt-vignette {
-    position: absolute;
-
-    inset: 0;
-
-    z-index: 998;
-
-    pointer-events: none;
-
-    background:
-        radial-gradient(
-            ellipse at center,
-            transparent 52%,
-            rgba(0, 0, 0, 0.08) 68%,
-            rgba(0, 0, 0, 0.38) 87%,
-            rgba(0, 0, 0, 0.72) 100%
-        );
-
-    box-shadow:
-        inset 0 0 80px rgba(0, 0, 0, 0.6);
-}
-
-
-/* =========================================================
-   SUBTLE CRT COLOR DISTORTION
-   ========================================================= */
-
-.game-screen .crt-color {
-    position: absolute;
-
-    inset: 0;
-
-    z-index: 997;
-
-    pointer-events: none;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(255, 0, 0, 0.018),
-            transparent 32%,
-            rgba(0, 255, 255, 0.018)
-        );
-
-    mix-blend-mode: screen;
-}
-
-
-/* =========================================================
-   TOP COPYRIGHT / TITLE
-   ========================================================= */
-
-.game-title {
-    position: absolute;
-
-    top: 4px;
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    z-index: 40;
-
-    color: rgba(255, 255, 255, 0.68);
-
-    font-size: clamp(11px, 1.15vw, 17px);
-
-    white-space: nowrap;
-
-    text-shadow:
-        1px 1px 0 #333,
-        0 0 4px rgba(255, 255, 255, 0.18);
-}
-
-
-/* =========================================================
-   SETTINGS / GEAR
-   ========================================================= */
-
-.settings-button {
-    position: absolute;
-
-    top: 8px;
-    left: 10px;
-
-    z-index: 60;
-
-    width: 52px;
-    height: 52px;
-
-    border: 0;
-
-    background: transparent;
-
-    color: #e6e6e6;
-
-    font-size: 38px;
-
-    line-height: 1;
-
-    cursor: pointer;
-
-    text-shadow:
-        2px 2px 2px #222,
-        0 0 4px #000;
-
-    filter:
-        drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.7));
-
-    transition:
-        transform 0.2s ease,
-        filter 0.2s ease;
-}
-
-.settings-button:hover {
-    transform: rotate(20deg) scale(1.06);
-
-    filter:
-        drop-shadow(1px 1px 2px #000)
-        drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));
-}
-
-
-/* =========================================================
-   CHARACTER SPRITES
-   ========================================================= */
-
+/* --- Character Sprite Layers --- */
 .character-sprites {
-    position: absolute;
-
-    inset: 0;
-
-    z-index: 10;
-
-    pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
 }
-
-
-/* =========================================================
-   MAIN CHARACTER
-   ========================================================= */
 
 .main-sprite {
-    position: absolute;
-
-    left: 50%;
-    bottom: 8%;
-
-    transform:
-        translateX(-50%)
-        translateY(0);
-
-    width: auto;
-    height: 76%;
-
-    max-width: 65%;
-
-    object-fit: contain;
-
-    opacity: 0.98;
-
-    z-index: 12;
-
-    filter:
-        drop-shadow(0 0 4px rgba(255, 255, 255, 0.5))
-        drop-shadow(0 0 16px rgba(255, 190, 215, 0.48))
-        drop-shadow(0 8px 8px rgba(0, 0, 0, 0.38));
-
-    transition:
-        transform 0.3s ease,
-        filter 0.3s ease;
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 85%;
+  object-fit: contain;
+  /* White halo glow effect */
+  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6)) brightness(1.05);
 }
-
-
-/* =========================================================
-   CHARACTER HALO
-   ========================================================= */
-
-.main-sprite::before {
-    content: "";
-
-    position: absolute;
-
-    left: 50%;
-    top: 42%;
-
-    width: 80%;
-    height: 80%;
-
-    transform: translate(-50%, -50%);
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            ellipse,
-            rgba(255, 255, 255, 0.28) 0%,
-            rgba(255, 218, 230, 0.16) 35%,
-            rgba(255, 190, 210, 0.06) 55%,
-            transparent 75%
-        );
-
-    filter: blur(18px);
-
-    z-index: -1;
-}
-
-
-/* =========================================================
-   SIDE AVATAR / PORTRAIT
-   ========================================================= */
 
 .side-avatar {
-    position: absolute;
-
-    left: 3.5%;
-    bottom: 10%;
-
-    width: clamp(90px, 14vw, 185px);
-    height: clamp(90px, 14vw, 185px);
-
-    z-index: 50;
-
-    object-fit: contain;
-
-    border-radius: 50%;
-
-    border:
-        clamp(2px, 0.3vw, 5px)
-        solid
-        rgba(255, 255, 255, 0.95);
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(255, 255, 255, 0.22),
-            rgba(255, 255, 255, 0.04)
-        );
-
-    box-shadow:
-        0 3px 10px rgba(0, 0, 0, 0.7),
-        0 0 8px rgba(255, 255, 255, 0.55),
-        0 0 22px rgba(255, 125, 160, 0.45);
-
-    filter:
-        drop-shadow(0 3px 4px rgba(0, 0, 0, 0.5));
+  position: absolute;
+  bottom: 0%;
+  left: 2%;
+  height: 45%;
+  z-index: 4;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
 }
 
-
-/* =========================================================
-   FLOATING HEARTS
-   ========================================================= */
-
-.side-avatar::before,
-.side-avatar::after {
-    position: absolute;
-
-    z-index: 60;
-
-    color: #d52b48;
-
-    font-family: Georgia, serif;
-
-    text-shadow:
-        1px 1px 2px #fff,
-        2px 2px 3px rgba(0, 0, 0, 0.7);
-
-    pointer-events: none;
+/* --- Affection Meter (Left Side) --- */
+.status-bar-container {
+  position: absolute;
+  top: 15%;
+  left: 2%;
+  width: 40px;
+  height: 50%;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
-.side-avatar::before {
-    content: "♥";
-
-    left: -18%;
-    top: 25%;
-
-    font-size: clamp(18px, 2vw, 32px);
-
-    transform: rotate(-12deg);
-}
-
-.side-avatar::after {
-    content: "♥";
-
-    left: 7%;
-    top: -22%;
-
-    font-size: clamp(13px, 1.5vw, 24px);
-
-    transform: rotate(15deg);
-}
-
-
-/* =========================================================
-   OPTIONAL EXTRA HEARTS
-   HTML:
-   <div class="heart heart-one">♥</div>
-   ========================================================= */
-
-.heart {
-    position: absolute;
-
-    z-index: 55;
-
-    color: #bd1736;
-
-    font-family: Georgia, serif;
-
-    text-shadow:
-        1px 1px 2px #fff,
-        2px 2px 3px rgba(0, 0, 0, 0.65);
-
-    pointer-events: none;
-}
-
-.heart-one {
-    left: 5%;
-    bottom: 32%;
-
-    font-size: clamp(18px, 2vw, 30px);
-
-    transform: rotate(-12deg);
-}
-
-.heart-two {
-    left: 19%;
-    bottom: 18%;
-
-    font-size: clamp(12px, 1.5vw, 23px);
-
-    transform: rotate(18deg);
-}
-
-.heart-three {
-    left: 25%;
-    bottom: 34%;
-
-    font-size: clamp(15px, 1.7vw, 27px);
-
-    transform: rotate(-7deg);
-}
-
-
-/* =========================================================
-   AFFECTION / RELATIONSHIP STATUS BAR
-   ========================================================= */
-
-.status-bar {
-    position: absolute;
-
-    left: 1.2%;
-    top: 14%;
-
-    width: clamp(34px, 3.5vw, 55px);
-    height: 47%;
-
-    z-index: 70;
-
-    padding: 3px;
-
-    border:
-        clamp(2px, 0.25vw, 4px)
-        solid
-        #d4d4d4;
-
-    border-radius: 22px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #575757 0%,
-            #f5f5f5 17%,
-            #999 40%,
-            #f0f0f0 57%,
-            #555 100%
-        );
-
-    box-shadow:
-        inset 0 0 4px rgba(0, 0, 0, 0.9),
-        inset 2px 0 2px rgba(255, 255, 255, 0.75),
-        0 3px 8px rgba(0, 0, 0, 0.75);
-
-    overflow: visible;
-}
-
-
-/* =========================================================
-   STATUS INNER WELL
-   ========================================================= */
-
-.status-bar::before {
-    content: "";
-
-    position: absolute;
-
-    inset: 5px;
-
-    border-radius: 16px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #151515,
-            #555,
-            #181818
-        );
-
-    box-shadow:
-        inset 0 0 6px #000;
-
-    z-index: -1;
-}
-
-
-/* =========================================================
-   STATUS FILL
-   ========================================================= */
-
-.status-fill {
-    position: absolute;
-
-    left: 7px;
-    right: 7px;
-    bottom: 7px;
-
-    height: var(--affection, 100%);
-
-    min-height: 4%;
-
-    border-radius: 13px;
-
-    background:
-        linear-gradient(
-            to right,
-            rgba(104, 0, 17, 0.92),
-            rgba(191, 22, 48, 0.96) 28%,
-            rgba(243, 70, 96, 0.98) 55%,
-            rgba(255, 151, 166, 0.95) 82%,
-            rgba(255, 205, 213, 0.9)
-        );
-
-    box-shadow:
-        inset 2px 0 3px rgba(255, 255, 255, 0.3),
-        inset -2px 0 3px rgba(0, 0, 0, 0.25),
-        0 0 7px rgba(255, 58, 89, 0.55);
-
-    overflow: hidden;
-}
-
-
-/* Glossy reflection */
-
-.status-fill::before {
-    content: "";
-
-    position: absolute;
-
-    left: 3px;
-    right: 3px;
-    top: 4px;
-
-    height: 28%;
-
-    border-radius: 10px;
-
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(255, 255, 255, 0.62),
-            rgba(255, 255, 255, 0.08),
-            transparent
-        );
-
-    opacity: 0.7;
-}
-
-
-/* =========================================================
-   STATUS VALUE
-   ========================================================= */
 
 .status-value {
-    position: absolute;
-
-    left: 70%;
-
-    top: -12%;
-
-    transform: translateX(-50%);
-
-    min-width: 50px;
-
-    color: #f4f4f4;
-
-    font-family:
-        "VT323",
-        "Share Tech Mono",
-        monospace;
-
-    font-size: clamp(17px, 2vw, 28px);
-
-    letter-spacing: 1px;
-
-    white-space: nowrap;
-
-    text-shadow:
-        1px 1px 0 #171717,
-        2px 2px 0 #171717,
-        0 0 4px rgba(255, 255, 255, 0.3);
+  color: var(--text-gold);
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 0px #000;
+  margin-bottom: 5px;
 }
 
+.status-bar-outer {
+  width: 24px;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  border: 3px solid #b0b0b0; /* Metallic capsule look */
+  border-radius: 15px;
+  padding: 2px;
+  display: flex;
+  align-items: flex-end;
+  box-shadow: inset 0 0 5px #000;
+}
 
-/* =========================================================
-   DIALOGUE CONTAINER
-   ========================================================= */
+.status-bar-fill {
+  width: 100%;
+  height: 85%; /* Dynamic control via inline height or JS */
+  background: var(--bar-fluid-red);
+  border-radius: 10px;
+  box-shadow: 0 0 8px #ff0000;
+}
 
+/* --- Floating Decorative Hearts --- */
+.heart-icon {
+  position: absolute;
+  z-index: 4;
+  filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
+  /* Example placement coordinates near bottom left avatar */
+  bottom: 22%;
+  left: 18%;
+  width: 25px;
+}
+
+/* --- Dialogue Main Box Area (Bottom Window) --- */
 .dialogue-container {
-    position: absolute;
-
-    left: 0;
-    bottom: 0;
-
-    width: 100%;
-
-    height: 30%;
-
-    min-height: 180px;
-
-    z-index: 30;
-
-    padding:
-        6.5% 
-        11%
-        3%
-        20%;
-
-    cursor: pointer;
-
-    overflow: visible;
-
-    color: #fff;
-
-    border-top:
-        4px
-        solid
-        rgba(244, 217, 104, 0.95);
-
-    border-bottom:
-        2px
-        solid
-        rgba(239, 208, 91, 0.8);
-
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(107, 14, 48, 0.18) 0%,
-            rgba(133, 17, 56, 0.38) 18%,
-            rgba(162, 26, 71, 0.62) 45%,
-            rgba(139, 14, 56, 0.84) 72%,
-            rgba(91, 9, 38, 0.92) 100%
-        );
-
-    box-shadow:
-        inset 0 2px 0 rgba(255, 239, 148, 0.35),
-        inset 0 0 35px rgba(0, 0, 0, 0.3),
-        0 -8px 35px rgba(165, 29, 76, 0.2);
-
-    text-shadow:
-        2px 2px 0 rgba(0, 0, 0, 0.85),
-        0 0 4px rgba(0, 0, 0, 0.75);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 32%;
+  background: var(--dialogue-pink-gradient);
+  border-top: 4px solid var(--text-gold);
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.4);
+  padding: 30px 60px 20px 240px; /* Offset left padding to clear side portrait */
+  z-index: 3;
 }
-
-
-/* =========================================================
-   HORIZONTAL RETRO LINE PATTERN
-   ========================================================= */
-
-.dialogue-container::before {
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    z-index: -1;
-
-    pointer-events: none;
-
-    background:
-        repeating-linear-gradient(
-            to bottom,
-            rgba(255, 255, 255, 0.055) 0px,
-            rgba(255, 255, 255, 0.055) 1px,
-            rgba(0, 0, 0, 0.09) 2px,
-            rgba(0, 0, 0, 0.09) 4px
-        );
-
-    opacity: 0.7;
-
-    mix-blend-mode: overlay;
-}
-
-
-/* =========================================================
-   DIALOGUE TOP FADE
-   ========================================================= */
-
-.dialogue-container::after {
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-    right: 0;
-
-    top: -115px;
-
-    height: 120px;
-
-    pointer-events: none;
-
-    background:
-        linear-gradient(
-            to top,
-            rgba(148, 19, 61, 0.32),
-            rgba(148, 19, 61, 0)
-        );
-}
-
-
-/* =========================================================
-   NAME TAG
-   ========================================================= */
 
 .name-tag {
-    position: absolute;
-
-    left: 20%;
-
-    top: -23px;
-
-    z-index: 40;
-
-    padding:
-        3px
-        12px
-        5px;
-
-    color: #fff1a6;
-
-    font-size: clamp(21px, 2.3vw, 32px);
-
-    font-weight: bold;
-
-    white-space: nowrap;
-
-    letter-spacing: 0.2px;
-
-    text-shadow:
-        2px 2px 0 #171717,
-        -1px -1px 0 #171717,
-        1px -1px 0 #171717,
-        -1px 1px 0 #171717,
-        0 0 4px #000;
-
-    -webkit-text-stroke:
-        0.7px
-        #82ad59;
-
-    filter:
-        drop-shadow(0 2px 2px rgba(0, 0, 0, 0.7));
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: var(--text-green);
+  /* Retro text stroke shadow styling */
+  text-shadow: 
+    -2px -2px 0 var(--text-stroke),  
+     2px -2px 0 var(--text-stroke),
+    -2px  2px 0 var(--text-stroke),
+     2px  2px 0 var(--text-stroke),
+     3px  3px 0px rgba(0,0,0,0.8);
+  margin-bottom: 8px;
+  letter-spacing: 1px;
 }
 
-
-/* =========================================================
-   NAME TAG GREEN ACCENT
-   ========================================================= */
-
-.name-tag::before {
-    content: "";
-
-    position: absolute;
-
-    left: -8px;
-    right: -8px;
-
-    bottom: -3px;
-
-    height: 2px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #8fbd61 20%,
-            #c6db82 50%,
-            #8fbd61 80%,
-            transparent
-        );
-
-    opacity: 0.85;
+.dialogue-text {
+  font-size: 1.6rem;
+  color: #ffffff;
+  line-height: 1.4;
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.9);
+  font-weight: 500;
 }
 
-
-/* =========================================================
-   "SAYS"
-   ========================================================= */
-
-.dialogue-says {
-    position: absolute;
-
-    left: 20%;
-
-    top: 28%;
-
-    color: #fff;
-
-    font-size: clamp(15px, 1.5vw, 21px);
-
-    font-weight: bold;
-
-    text-shadow:
-        2px 2px 0 #222,
-        0 0 3px #000;
+.dialogue-translation {
+  display: block;
+  font-size: 1.1rem;
+  color: #ffffff;
+  opacity: 0.9;
+  margin-top: 6px;
+  font-style: italic;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
 }
 
-
-/* =========================================================
-   JAPANESE DIALOGUE
-   ========================================================= */
-
-.dialogue-japanese {
-    position: relative;
-
-    margin-top: 2%;
-
-    color: #fff;
-
-    font-size: clamp(17px, 2vw, 29px);
-
-    line-height: 1.35;
-
-    text-shadow:
-        2px 2px 0 #171717,
-        0 0 4px #000;
-
-    letter-spacing: 0.2px;
+/* --- Footer Submenus & Navigation --- */
+.status-label {
+  position: absolute;
+  bottom: 8px;
+  left: 20px;
+  z-index: 5;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 0px #000;
+  letter-spacing: 1px;
 }
-
-
-/* =========================================================
-   ENGLISH TRANSLATION
-   ========================================================= */
-
-.dialogue-english {
-    position: relative;
-
-    margin-top: 4px;
-
-    color: #f7f7f7;
-
-    font-size: clamp(13px, 1.45vw, 19px);
-
-    line-height: 1.35;
-
-    font-style: italic;
-
-    text-shadow:
-        2px 2px 0 #171717,
-        0 0 3px #000;
-}
-
-
-/* =========================================================
-   CLICK TO CONTINUE
-   ========================================================= */
-
-.continue-indicator {
-    position: absolute;
-
-    right: 2.2%;
-    bottom: 7px;
-
-    color: #eee;
-
-    font-family:
-        "Share Tech Mono",
-        monospace;
-
-    font-size: 10px;
-
-    letter-spacing: 1px;
-
-    text-shadow:
-        1px 1px 2px #000;
-
-    animation:
-        retro-blink 1.25s
-        steps(2, start)
-        infinite;
-}
-
-@keyframes retro-blink {
-
-    0% {
-        opacity: 0.35;
-    }
-
-    50% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0.35;
-    }
-}
-
-
-/* =========================================================
-   QUICK MENU
-   ========================================================= */
 
 .quick-menu {
-    position: absolute;
-
-    left: 1.5%;
-    bottom: 7px;
-
-    z-index: 80;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
+  position: absolute;
+  bottom: 8px;
+  right: 30px;
+  z-index: 5;
+  display: flex;
+  gap: 20px;
 }
 
-
-/* =========================================================
-   GAME STATUS
-   ========================================================= */
-
-.game-status {
-    position: absolute;
-
-    left: 1.5%;
-    bottom: 8px;
-
-    z-index: 80;
-
-    color: #f1f1f1;
-
-    font-family:
-        "VT323",
-        "Share Tech Mono",
-        monospace;
-
-    font-size: clamp(14px, 1.5vw, 22px);
-
-    letter-spacing: 0.5px;
-
-    text-shadow:
-        2px 2px 0 #151515,
-        0 0 4px #000;
+.quick-menu a, .quick-menu span {
+  color: var(--text-gold);
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  text-shadow: 2px 2px 0px #000;
+  transition: color 0.1s ease;
 }
 
-
-/* =========================================================
-   STATUS LABEL
-   ========================================================= */
-
-.status-label {
-    color: #f0f0f0;
-
-    font-weight: bold;
-
-    text-transform: uppercase;
-
-    -webkit-text-stroke:
-        0.6px
-        #161616;
-
-    text-shadow:
-        2px 2px 0 #111,
-        0 0 4px rgba(255, 255, 255, 0.2);
+.quick-menu a:hover {
+  color: #ffffff;
 }
 
-
-/* =========================================================
-   NAVIGATION LINKS
-   ========================================================= */
-
-.nav-links {
-    position: absolute;
-
-    right: 1.8%;
-    bottom: 7px;
-
-    z-index: 85;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: clamp(12px, 2vw, 30px);
-
-    white-space: nowrap;
-}
-
-
-/* =========================================================
-   NAV BUTTONS
-   ========================================================= */
-
-.nav-links a,
-.nav-links button {
-    appearance: none;
-
-    border: none;
-
-    background: transparent;
-
-    color: #d9ed68;
-
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    font-size: clamp(13px, 1.45vw, 20px);
-
-    font-weight: bold;
-
-    text-decoration: none;
-
-    cursor: pointer;
-
-    text-shadow:
-        1px 1px 0 #151515,
-        2px 2px 2px rgba(0, 0, 0, 0.75);
-
-    transition:
-        color 0.15s ease,
-        transform 0.15s ease,
-        text-shadow 0.15s ease;
-}
-
-.nav-links a:hover,
-.nav-links button:hover {
-    color: #fff79a;
-
-    transform: translateY(-1px);
-
-    text-shadow:
-        1px 1px 0 #111,
-        0 0 5px rgba(255, 245, 100, 0.65);
-}
-
-.nav-links a:active,
-.nav-links button:active {
-    transform: translateY(1px) scale(0.97);
-}
-
-
-/* =========================================================
-   QUICK MENU VARIANT
-   ========================================================= */
-
-.quick-menu button,
-.quick-menu a {
-    color: #d9ed68;
-
-    border: none;
-
-    background: transparent;
-
-    text-decoration: none;
-
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    font-weight: bold;
-
-    cursor: pointer;
-
-    text-shadow:
-        1px 1px 0 #111,
-        0 0 3px #000;
-}
-
-
-/* =========================================================
-   MENU OVERLAY
-   ========================================================= */
-
-.menu-overlay {
-    position: absolute;
-
-    inset: 0;
-
-    z-index: 200;
-
-    display: none;
-
-    align-items: center;
-    justify-content: center;
-
-    background:
-        rgba(20, 0, 12, 0.72);
-
-    backdrop-filter: blur(3px);
-}
-
-.menu-overlay.open {
-    display: flex;
-}
-
-
-/* =========================================================
-   MENU WINDOW
-   ========================================================= */
-
-.menu-window {
-    position: relative;
-
-    width: min(390px, 75%);
-
-    padding: 30px;
-
-    color: #fff;
-
-    text-align: center;
-
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(79, 32, 52, 0.97),
-            rgba(25, 14, 22, 0.98)
-        );
-
-    border:
-        3px
-        solid
-        #d8bd62;
-
-    box-shadow:
-        0 10px 35px rgba(0, 0, 0, 0.85),
-        inset 0 1px rgba(255, 255, 255, 0.2);
-}
-
-.menu-window h2 {
-    color: #f0e27d;
-
-    font-size: 26px;
-
-    text-shadow:
-        2px 2px #111;
-}
-
-.menu-window p {
-    margin: 15px 0;
-
-    font-size: 17px;
-
-    text-shadow:
-        1px 1px #000;
-}
-
-.menu-window strong {
-    color: #ff8ca5;
-}
-
-
-/* =========================================================
-   CLOSE BUTTON
-   ========================================================= */
-
-.close-menu {
-    position: absolute;
-
-    right: 8px;
-    top: 4px;
-
-    border: none;
-
-    background: transparent;
-
-    color: #fff;
-
-    font-size: 28px;
-
-    cursor: pointer;
-}
-
-
-/* =========================================================
-   RETRO BUTTONS
-   ========================================================= */
-
-.menu-window button:not(.close-menu) {
-    padding: 8px 22px;
-
-    border:
-        2px
-        solid
-        #d8bd62;
-
-    background:
-        linear-gradient(
-            to bottom,
-            #57414b,
-            #241820
-        );
-
-    color: #f2e57e;
-
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    font-weight: bold;
-
-    cursor: pointer;
-
-    text-shadow:
-        1px 1px #111;
-}
-
-.menu-window button:not(.close-menu):hover {
-    background:
-        linear-gradient(
-            to bottom,
-            #735464,
-            #30202b
-        );
-}
-
-
-/* =========================================================
-   CRT FLICKER
-   ========================================================= */
-
-@keyframes crt-flicker {
-
-    0%,
-    100% {
-        opacity: 1;
-    }
-
-    48% {
-        opacity: 0.985;
-    }
-
-    50% {
-        opacity: 0.96;
-    }
-
-    52% {
-        opacity: 0.99;
-    }
-}
-
-.game-screen {
-    animation:
-        crt-flicker
-        5s
-        infinite;
-}
-
-
-/* =========================================================
-   RESPONSIVE — TABLET
-   ========================================================= */
-
-@media (max-width: 900px) {
-
-    .game-screen {
-        width: 100vw;
-        height: 56.25vw;
-
-        max-height: 100vh;
-    }
-
-    .status-bar {
-        left: 1.4%;
-
-        height: 44%;
-    }
-
-    .main-sprite {
-        height: 70%;
-
-        bottom: 8%;
-    }
-
-    .side-avatar {
-        left: 3%;
-
-        bottom: 9%;
-    }
-
-    .dialogue-container {
-        height: 31%;
-
-        padding-left: 18%;
-        padding-right: 5%;
-    }
-
-    .name-tag,
-    .dialogue-says {
-        left: 18%;
-    }
-}
-
-
-/* =========================================================
-   RESPONSIVE — MOBILE
-   ========================================================= */
-
-@media (max-width: 600px) {
-
-    .game-screen {
-        width: 100vw;
-        height: 100vh;
-
-        aspect-ratio: auto;
-    }
-
-    .status-bar {
-        left: 7px;
-        top: 16%;
-
-        width: 32px;
-        height: 36%;
-    }
-
-    .status-value {
-        left: 95%;
-
-        font-size: 15px;
-    }
-
-    .main-sprite {
-        height: 55%;
-
-        bottom: 22%;
-    }
-
-    .side-avatar {
-        left: 4%;
-        bottom: 17%;
-
-        width: 78px;
-        height: 78px;
-    }
-
-    .dialogue-container {
-        height: 30%;
-
-        min-height: 170px;
-
-        padding:
-            52px
-            15px
-            24px
-            25%;
-    }
-
-    .name-tag {
-        left: 25%;
-
-        top: -19px;
-
-        font-size: 18px;
-    }
-
-    .dialogue-says {
-        left: 25%;
-
-        top: 25%;
-
-        font-size: 12px;
-    }
-
-    .dialogue-japanese {
-        font-size: 15px;
-    }
-
-    .dialogue-english {
-        font-size: 11px;
-    }
-
-    .nav-links {
-        right: 10px;
-
-        gap: 8px;
-    }
-
-    .nav-links a,
-    .nav-links button {
-        font-size: 10px;
-    }
-
-    .game-status {
-        left: 8px;
-
-        font-size: 12px;
-    }
-}
-
-
-/* =========================================================
-   REDUCE MOTION
-   ========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-    .game-screen {
-        animation: none;
-    }
-
-    .continue-indicator {
-        animation: none;
-    }
-
-    .settings-button,
-    .main-sprite,
-    .nav-links a,
-    .nav-links button {
-        transition: none;
-    }
+/* System Settings Gear Icon Alignment */
+.system-gear {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 40px;
+  opacity: 0.7;
+  z-index: 5;
+  filter: drop-shadow(2px 2px 2px #000);
 }
