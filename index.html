@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taehyung — テヒョン</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="game">
+
+        <!-- BACKGROUND -->
+        <div class="background"></div>
+
+        <!-- TOP UI -->
+        <div class="top-bar">
+            <div class="copyright">All Rights Reserved 2026.</div>
+            <div class="game-title">テヒョン</div>
+        </div>
+
+        <!-- SETTINGS ICON -->
+        <button class="settings-button" aria-label="Settings">
+            ⚙
+        </button>
+
+        <!-- AFFECTION -->
+        <div class="affection-container">
+            <div class="affection-label">LOVE</div>
+
+            <div class="affection-bar">
+                <div class="affection-fill"></div>
+            </div>
+
+            <div class="affection-number">110%</div>
+        </div>
+
+        <!-- CHARACTER -->
+        <div class="character-area">
+
+            <!-- SMALL ICON -->
+            <img
+                src="icon.png"
+                class="character-icon"
+                alt="Taehyung icon"
+            >
+
+            <!-- MAIN POSE -->
+            <img
+                src="taehyung.png"
+                class="character"
+                alt="Taehyung"
+            >
+
+        </div>
+
+        <!-- DIALOGUE -->
+        <section class="dialogue-box" id="dialogueBox">
+
+            <div class="character-name">
+                テヒョン <span>(Taehyung)</span>
+            </div>
+
+            <div class="says">
+                says:
+            </div>
+
+            <div class="dialogue-japanese" id="japaneseText"></div>
+
+            <div class="dialogue-english" id="englishText"></div>
+
+            <div class="continue">
+                CLICK TO CONTINUE
+            </div>
+
+        </section>
+
+        <!-- BOTTOM BUTTONS -->
+        <div class="bottom-menu">
+            <button id="menuButton">MENU</button>
+            <button id="nextButton">NEXT</button>
+            <button id="autoButton">AUTO</button>
+            <button id="saveButton">SAVE</button>
+        </div>
+
+        <!-- MENU -->
+        <div class="menu-overlay" id="menuOverlay">
+
+            <div class="menu-window">
+
+                <button class="close-menu" id="closeMenu">
+                    ×
+                </button>
+
+                <h2>MENU</h2>
+
+                <div class="menu-line"></div>
+
+                <p>
+                    Affection
+                    <strong>110%</strong>
+                </p>
+
+                <p id="sceneNumber">
+                    Dialogue 1 / 7
+                </p>
+
+                <button id="restartButton">
+                    RESTART
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
