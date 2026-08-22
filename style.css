@@ -16,9 +16,9 @@ body {
     font-family: Georgia, "Times New Roman", serif;
 }
 
-/* =========================
+/* =========================================
    GAME
-========================= */
+========================================= */
 
 .game {
     position: relative;
@@ -29,9 +29,9 @@ body {
     background: #222;
 }
 
-/* =========================
+/* =========================================
    BACKGROUND
-========================= */
+========================================= */
 
 .background {
     position: absolute;
@@ -44,8 +44,6 @@ body {
     z-index: 0;
 }
 
-/* Slight darkening so the UI remains readable */
-
 .background::after {
     content: "";
     position: absolute;
@@ -54,15 +52,17 @@ body {
     background:
         linear-gradient(
             to bottom,
-            rgba(0, 0, 0, 0.28),
-            rgba(0, 0, 0, 0.02) 35%,
-            rgba(0, 0, 0, 0.28)
+            rgba(0, 0, 0, 0.18),
+            rgba(0, 0, 0, 0.03) 40%,
+            rgba(0, 0, 0, 0.22)
         );
+
+    pointer-events: none;
 }
 
-/* =========================
+/* =========================================
    TOP BAR
-========================= */
+========================================= */
 
 .top-bar {
     position: absolute;
@@ -72,7 +72,7 @@ body {
     width: 100%;
     height: 38px;
 
-    z-index: 10;
+    z-index: 30;
 
     display: flex;
     align-items: center;
@@ -82,17 +82,14 @@ body {
 
     color: rgba(255, 255, 255, 0.72);
 
+    font-size: clamp(12px, 1.3vw, 18px);
+
     text-shadow:
         1px 1px 2px #000,
         0 0 4px #000;
-
-    font-size: clamp(12px, 1.3vw, 18px);
 }
 
 .copyright {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
     white-space: nowrap;
 }
 
@@ -100,27 +97,27 @@ body {
     display: none;
 }
 
-/* =========================
+/* =========================================
    SETTINGS
-========================= */
+========================================= */
 
 .settings-button {
     position: absolute;
 
-    top: 10px;
-    left: 14px;
+    top: 7px;
+    left: 10px;
 
-    z-index: 20;
+    z-index: 40;
 
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
 
     border: none;
     background: transparent;
 
     color: white;
 
-    font-size: 38px;
+    font-size: 39px;
     line-height: 1;
 
     cursor: pointer;
@@ -135,26 +132,26 @@ body {
 }
 
 .settings-button:hover {
-    transform: rotate(25deg) scale(1.08);
+    transform: rotate(20deg) scale(1.08);
 }
 
 .settings-button:active {
-    transform: rotate(25deg) scale(0.95);
+    transform: rotate(20deg) scale(0.95);
 }
 
-/* =========================
-   AFFECTION
-========================= */
+/* =========================================
+   AFFECTION BAR
+========================================= */
 
 .affection-container {
     position: absolute;
 
-    left: 14px;
-    top: 82px;
+    left: 12px;
+    top: 94px;
 
-    z-index: 15;
+    z-index: 35;
 
-    width: 58px;
+    width: 62px;
 
     display: flex;
     flex-direction: column;
@@ -162,7 +159,7 @@ body {
 }
 
 .affection-label {
-    margin-bottom: 7px;
+    margin-bottom: 6px;
 
     color: white;
 
@@ -177,24 +174,24 @@ body {
 .affection-bar {
     position: relative;
 
-    width: 38px;
+    width: 39px;
     height: 270px;
 
     border-radius: 20px;
 
-    border: 3px solid #ddd;
+    border: 3px solid rgba(230, 230, 230, 0.9);
 
     background:
         linear-gradient(
             to right,
-            #171717,
+            #111,
             #555,
-            #151515
+            #161616
         );
 
     box-shadow:
-        0 2px 5px rgba(0, 0, 0, 0.8),
-        inset 0 0 5px rgba(0, 0, 0, 0.8);
+        0 3px 7px rgba(0, 0, 0, 0.8),
+        inset 0 0 6px rgba(0, 0, 0, 0.8);
 
     overflow: hidden;
 }
@@ -213,14 +210,15 @@ body {
     background:
         linear-gradient(
             to top,
-            #8d0d20,
-            #d52b49 45%,
-            #ff7a91
+            #8d1125 0%,
+            #c72a48 45%,
+            #f16a82 78%,
+            #ff9dad 100%
         );
 
     box-shadow:
-        inset 0 0 7px rgba(255, 255, 255, 0.4),
-        0 0 7px rgba(255, 50, 80, 0.45);
+        inset 0 0 7px rgba(255, 255, 255, 0.35),
+        0 0 8px rgba(255, 70, 100, 0.4);
 }
 
 .affection-number {
@@ -236,27 +234,29 @@ body {
         0 0 4px #000;
 }
 
-/* =========================
+/* =========================================
    CHARACTER AREA
-========================= */
+========================================= */
 
 .character-area {
     position: absolute;
 
     left: 50%;
-    bottom: 155px;
+    bottom: 135px;
 
-    width: min(600px, 62vw);
-    height: min(600px, 75vh);
+    width: min(650px, 65vw);
+    height: min(620px, 78vh);
 
     transform: translateX(-50%);
 
-    z-index: 3;
+    z-index: 5;
 
     pointer-events: none;
 }
 
-/* Main character */
+/* =========================================
+   MAIN CHARACTER POSE
+========================================= */
 
 .character {
     position: absolute;
@@ -273,101 +273,138 @@ body {
     object-fit: contain;
 
     filter:
-        drop-shadow(0 5px 5px rgba(0, 0, 0, 0.35));
+        drop-shadow(0 5px 5px rgba(0, 0, 0, 0.3));
 }
 
-/* Small character icon */
+/* =========================================
+   SMALL CHARACTER ICON
+   SITS NEXT TO THE DIALOGUE
+========================================= */
 
 .character-icon {
     position: absolute;
 
-    left: -95px;
-    bottom: 35px;
+    left: -115px;
+    bottom: -90px;
 
-    width: 105px;
-    height: 105px;
+    width: 125px;
+    height: 125px;
 
     object-fit: contain;
 
-    z-index: 5;
+    z-index: 50;
 
     border-radius: 50%;
 
-    border: 4px solid white;
+    border: 4px solid rgba(255, 255, 255, 0.95);
 
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.12);
 
     box-shadow:
-        0 3px 8px rgba(0, 0, 0, 0.55),
-        0 0 5px rgba(255, 255, 255, 0.6);
+        0 3px 9px rgba(0, 0, 0, 0.65),
+        0 0 7px rgba(255, 255, 255, 0.65);
+
+    filter:
+        drop-shadow(0 3px 3px rgba(0, 0, 0, 0.35));
 }
 
-/* =========================
-   DIALOGUE BOX
-========================= */
+/* =========================================
+   PINK DIALOGUE AREA
+========================================= */
 
 .dialogue-box {
     position: absolute;
 
-    left: 50%;
-    bottom: 30px;
+    left: 0;
+    bottom: 0;
 
-    transform: translateX(-50%);
-
-    width: min(900px, calc(100% - 100px));
-    min-height: 145px;
+    width: 100%;
+    height: 255px;
 
     z-index: 20;
 
-    padding: 17px 25px 25px;
+    padding:
+        65px
+        clamp(35px, 10vw, 150px)
+        30px
+        clamp(135px, 15vw, 230px);
 
     cursor: pointer;
 
-    border: 2px solid rgba(255, 255, 255, 0.7);
+    border: none;
 
     background:
         linear-gradient(
-            to bottom,
-            rgba(30, 30, 30, 0.78),
-            rgba(12, 12, 12, 0.88)
+            to top,
+            rgba(205, 48, 87, 0.88) 0%,
+            rgba(218, 70, 105, 0.76) 22%,
+            rgba(226, 92, 125, 0.55) 45%,
+            rgba(230, 110, 140, 0.28) 68%,
+            rgba(230, 120, 145, 0.08) 86%,
+            rgba(230, 120, 145, 0) 100%
         );
-
-    box-shadow:
-        0 3px 12px rgba(0, 0, 0, 0.75),
-        inset 0 1px 0 rgba(255, 255, 255, 0.25);
 
     color: white;
 
+    box-shadow:
+        inset 0 25px 45px rgba(255, 150, 175, 0.08);
+
     transition:
-        background 0.2s ease,
-        transform 0.15s ease;
+        background 0.2s ease;
+}
+
+/* Soft pink glow extending above the dialogue */
+
+.dialogue-box::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    bottom: 100%;
+
+    height: 170px;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(220, 73, 108, 0.30),
+            rgba(220, 73, 108, 0.14) 45%,
+            rgba(220, 73, 108, 0) 100%
+        );
 }
 
 .dialogue-box:hover {
     background:
         linear-gradient(
-            to bottom,
-            rgba(45, 45, 45, 0.82),
-            rgba(12, 12, 12, 0.9)
+            to top,
+            rgba(210, 52, 90, 0.9) 0%,
+            rgba(220, 72, 108, 0.78) 22%,
+            rgba(228, 95, 130, 0.56) 45%,
+            rgba(230, 110, 140, 0.29) 68%,
+            rgba(230, 120, 145, 0.08) 86%,
+            rgba(230, 120, 145, 0) 100%
         );
 }
 
-.dialogue-box:active {
-    transform: translateX(-50%) translateY(2px);
-}
-
-/* =========================
-   NAME
-========================= */
+/* =========================================
+   CHARACTER NAME
+========================================= */
 
 .character-name {
+    position: relative;
+
     display: inline-block;
 
     margin-bottom: 3px;
 
-    color: #ffe9a4;
+    color: #fff6ad;
 
-    font-size: clamp(19px, 2vw, 27px);
+    font-size: clamp(21px, 2.4vw, 31px);
     font-weight: bold;
 
     text-shadow:
@@ -377,84 +414,97 @@ body {
 
 .character-name span {
     font-size: 0.72em;
-    color: #fff;
+
+    color: #fff8d0;
 }
 
-/* =========================
+/* =========================================
    SAYS
-========================= */
+========================================= */
 
 .says {
-    position: absolute;
+    position: relative;
 
-    left: 26px;
-    top: 48px;
+    margin-top: -1px;
 
     color: white;
 
-    font-size: 15px;
+    font-size: clamp(15px, 1.5vw, 19px);
     font-weight: bold;
 
     text-shadow:
         1px 1px 2px #000;
 }
 
-/* =========================
-   DIALOGUE TEXT
-========================= */
+/* =========================================
+   JAPANESE DIALOGUE
+========================================= */
 
 .dialogue-japanese {
-    margin-top: 9px;
-    margin-left: 82px;
+    position: relative;
+
+    margin-top: 10px;
 
     color: white;
 
-    font-size: clamp(17px, 2vw, 24px);
+    font-size: clamp(17px, 2vw, 26px);
     line-height: 1.35;
+
+    text-shadow:
+        1px 1px 2px #000,
+        0 0 4px #000;
+}
+
+/* =========================================
+   ENGLISH TRANSLATION
+========================================= */
+
+.dialogue-english {
+    position: relative;
+
+    margin-top: 5px;
+
+    color: #fff;
+
+    font-size: clamp(13px, 1.45vw, 18px);
+    line-height: 1.35;
+
+    font-style: italic;
 
     text-shadow:
         1px 1px 2px #000,
         0 0 3px #000;
 }
 
-.dialogue-english {
-    margin-top: 5px;
-    margin-left: 82px;
-
-    color: #f0f0f0;
-
-    font-size: clamp(13px, 1.4vw, 17px);
-    line-height: 1.35;
-
-    font-style: italic;
-
-    text-shadow:
-        1px 1px 2px #000;
-}
-
-/* =========================
-   CONTINUE
-========================= */
+/* =========================================
+   CLICK TO CONTINUE
+========================================= */
 
 .continue {
     position: absolute;
 
-    right: 18px;
-    bottom: 7px;
+    right: 25px;
+    bottom: 14px;
 
-    color: rgba(255, 255, 255, 0.65);
+    color: rgba(255, 255, 255, 0.72);
 
     font-family: Arial, sans-serif;
+
     font-size: 9px;
+
     letter-spacing: 1px;
+
+    text-shadow:
+        1px 1px 2px #000;
 
     animation: blink 1.4s infinite;
 }
 
 @keyframes blink {
+
     0%,
     45% {
-        opacity: 0.4;
+        opacity: 0.35;
     }
 
     50%,
@@ -463,29 +513,33 @@ body {
     }
 }
 
-/* =========================
+/* =========================================
    BOTTOM MENU
-========================= */
+========================================= */
 
 .bottom-menu {
     position: absolute;
 
-    right: 18px;
-    bottom: 7px;
+    right: 20px;
+    bottom: 9px;
 
-    z-index: 30;
+    z-index: 60;
 
     display: flex;
-    gap: 20px;
+    align-items: center;
+
+    gap: 25px;
 }
 
 .bottom-menu button {
     border: none;
+
     background: transparent;
 
     color: #fff;
 
     font-family: Georgia, "Times New Roman", serif;
+
     font-size: 15px;
     font-weight: bold;
 
@@ -501,7 +555,8 @@ body {
 }
 
 .bottom-menu button:hover {
-    color: #ffd6df;
+    color: #ffd7df;
+
     transform: scale(1.08);
 }
 
@@ -509,9 +564,9 @@ body {
     transform: scale(0.95);
 }
 
-/* =========================
+/* =========================================
    MENU OVERLAY
-========================= */
+========================================= */
 
 .menu-overlay {
     position: absolute;
@@ -521,6 +576,7 @@ body {
     z-index: 100;
 
     display: none;
+
     align-items: center;
     justify-content: center;
 
@@ -608,6 +664,7 @@ body {
     top: 7px;
 
     border: none;
+
     background: transparent;
 
     color: white;
@@ -617,60 +674,45 @@ body {
     cursor: pointer;
 }
 
-/* =========================
+/* =========================================
    RESPONSIVE
-========================= */
+========================================= */
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
 
     .affection-container {
-        left: 8px;
-        top: 60px;
+        left: 7px;
+        top: 65px;
 
-        transform: scale(0.75);
+        transform: scale(0.78);
         transform-origin: top left;
     }
 
     .character-area {
-        bottom: 160px;
-
         width: 65vw;
-        height: 65vh;
+        height: 67vh;
+
+        bottom: 145px;
     }
 
     .character-icon {
-        left: -50px;
-        bottom: 25px;
+        left: -70px;
+        bottom: -82px;
 
-        width: 80px;
-        height: 80px;
+        width: 100px;
+        height: 100px;
     }
 
     .dialogue-box {
-        width: calc(100% - 35px);
+        height: 235px;
 
-        bottom: 38px;
-
-        min-height: 155px;
-
-        padding-left: 17px;
-        padding-right: 17px;
-    }
-
-    .dialogue-japanese,
-    .dialogue-english {
-        margin-left: 0;
-    }
-
-    .says {
-        display: none;
+        padding-left: 110px;
+        padding-right: 30px;
+        padding-top: 55px;
     }
 
     .bottom-menu {
-        right: 12px;
-        bottom: 8px;
-
-        gap: 12px;
+        gap: 15px;
     }
 
     .bottom-menu button {
@@ -678,24 +720,93 @@ body {
     }
 }
 
-@media (max-height: 650px) {
+@media (max-width: 600px) {
+
+    .affection-container {
+        transform: scale(0.62);
+    }
 
     .character-area {
-        bottom: 135px;
-        height: 62vh;
+        width: 72vw;
+        height: 60vh;
+
+        bottom: 145px;
+    }
+
+    .character-icon {
+        left: -32px;
+        bottom: -72px;
+
+        width: 82px;
+        height: 82px;
+
+        border-width: 3px;
     }
 
     .dialogue-box {
-        min-height: 125px;
-        padding-top: 10px;
+        height: 225px;
+
+        padding:
+            52px
+            18px
+            25px
+            82px;
+    }
+
+    .character-name {
+        font-size: 19px;
+    }
+
+    .says {
+        font-size: 13px;
+    }
+
+    .dialogue-japanese {
+        font-size: 16px;
+    }
+
+    .dialogue-english {
+        font-size: 12px;
+    }
+
+    .continue {
+        right: 12px;
+        bottom: 10px;
+    }
+
+    .bottom-menu {
+        right: 10px;
+        bottom: 5px;
+
+        gap: 9px;
+    }
+
+    .bottom-menu button {
+        font-size: 10px;
+    }
+}
+
+@media (max-height: 650px) {
+
+    .character-area {
+        bottom: 125px;
+        height: 64vh;
+    }
+
+    .character-icon {
+        bottom: -78px;
+
+        width: 95px;
+        height: 95px;
+    }
+
+    .dialogue-box {
+        height: 205px;
+
+        padding-top: 43px;
     }
 
     .affection-bar {
         height: 190px;
-    }
-
-    .character-icon {
-        width: 80px;
-        height: 80px;
     }
 }
